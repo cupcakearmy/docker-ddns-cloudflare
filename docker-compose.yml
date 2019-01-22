@@ -1,7 +1,9 @@
 version: '3'
 
 services:
-  updater:
-    build: .
+  ddns:
+    # build: .
+    image: cupcakearmy/ddns-cloudflare
     restart: always
     env_file: .env
+    container_name: ddns
