@@ -1,5 +1,5 @@
 # Docker DDNS Cloudflare
-This container is an adapted version of [this](https://gist.github.com/benkulbertis/fff10759c2391b6618dd) script.
+This container is an adapted version of [this](https://gist.github.com/benkulbertis/fff10759c2391b6618dd) script. It runs once every minute and only makes requests if the IP has changed since last time. The IP is resolved by https://canihazip.com.
 
 ## Quickstart 🚀
 
