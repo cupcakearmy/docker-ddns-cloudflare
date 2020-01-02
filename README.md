@@ -5,7 +5,7 @@ This container is an adapted version of [this](https://gist.github.com/benkulber
 
 1. Get yout api token [here](https://dash.cloudflare.com/) (Top right -> My Profile -> Scroll Down -> Global Api Key)
 
-2. Create the wanted DNS record (e.g. `some.example.com`). The script can only update it, now create it.
+2. Create the wanted DNS record (e.g. `some.example.com`). The script can only update it, not create it.
 
 3. Create an `.env` file:
 
