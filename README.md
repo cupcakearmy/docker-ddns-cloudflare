@@ -1,5 +1,8 @@
 # Docker DDNS Cloudflare
-This container is an adapted version of [this](https://gist.github.com/benkulbertis/fff10759c2391b6618dd) script. It runs once every minute and only makes requests if the IP has changed since last time. The IP is resolved by https://canihazip.com.
+
+Simple container for setting setting and updating to your local ip address.
+Only makes requests if the IP has changed since last time.
+By default it runs once every minute and the IP is resolved by https://canihazip.com.
 
 ## Quickstart 🚀
 
@@ -20,7 +23,7 @@ DNS_RECORD=some.example.org
 docker run -d --name ddns --restart always --env-file .env cupcakearmy/ddns-cloudflare
 ```
 
-To check logs: 
+To check logs:
 
 ```bash
 docker logs ddns
@@ -35,4 +38,27 @@ git clone https://github.com/CupCakeArmy/docker-ddns-cloudflare.git
 cp .sample.env .env
 # Edit the .env file with your data
 docker-compose up -d
+```
+
+## Customize
+
+### Custom CRON
+
+By default the script runs every 5 minutes. You can customize this by simply setting the `CRON` value in the `.env` file.
+
+```bash
+# .env
+
+# e.g. every minute
+CRON=* * * * *
+```
+
+### Custom Resolver
+
+By default the script checks the own ip by calling `https://api.ipify.org/`. This also can be configured. It has to be an endpoint that return a plain text containing the ip by get request.
+
+```bash
+# .env
+
+RESOLVER=https://ipv4.icanhazip.com/
 ```

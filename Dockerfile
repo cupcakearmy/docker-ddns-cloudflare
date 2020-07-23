@@ -1,12 +1,8 @@
-FROM alpine:3.8
+FROM node:14-alpine
 
-ENV file /usr/local/bin/run.sh
+WORKDIR /app
 
-RUN apk add --no-cache --update curl grep bash
+ADD ./package.json script.js yarn.lock ./
+RUN yarn
 
-RUN echo '*  *  *  *  * ${file}' > /etc/crontabs/root
-
-COPY ./run.sh ${file}
-RUN chmod +x ${file}
-
-CMD ["crond", "-l2", "-f"]
+CMD ["node", "script.js"]
