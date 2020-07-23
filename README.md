@@ -2,8 +2,8 @@
 
 ## Features 🌈
 
-- Simple container for setting setting and updating to your local ip address.
-- Only makes requests if the IP has changed since last time.
+- Simple container for setting setting and updating cloudflare records to your local ip address.
+- Only makes requests if the IP has changed.
 - By default it runs once every minute and the IP is resolved by https://api.ipify.org/.
 
 ## Quickstart 🚀
