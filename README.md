@@ -1,12 +1,21 @@
 # Docker DDNS Cloudflare
 
-Simple container for setting setting and updating to your local ip address.
-Only makes requests if the IP has changed since last time.
-By default it runs once every minute and the IP is resolved by https://canihazip.com.
+## Features 🌈
+
+- Simple container for setting setting and updating to your local ip address.
+- Only makes requests if the IP has changed since last time.
+- By default it runs once every minute and the IP is resolved by https://canihazip.com.
 
 ## Quickstart 🚀
 
-1. Get yout api token [here](https://dash.cloudflare.com/) (Top right -> My Profile -> Scroll Down -> Global Api Key)
+1. Get yout api token [here](https://dash.cloudflare.com/profile/api-tokens) (Top right -> My Profile -> API Tokens)
+
+Click create token. You can then use the Edit DNS Zone template. Give it a name.
+
+```
+Permissions: Zone, DNS, Edit
+Zone Resources: Include, All Zones
+```
 
 2. Create the wanted DNS record (e.g. `some.example.com`). The script can only update it, not create it.
 
