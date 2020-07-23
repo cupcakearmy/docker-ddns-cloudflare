@@ -12,10 +12,7 @@
 
 Click create token. You can then use the Edit DNS Zone template. Give it a name.
 
-```
-Permissions: Zone, DNS, Edit
-Zone Resources: Include, All Zones
-```
+![Settings](https://i.imgur.com/dLs8PHs.png)
 
 2. Create the wanted DNS record (e.g. `some.example.com`). The script can only update it, not create it.
 
