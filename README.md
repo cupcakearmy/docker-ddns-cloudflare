@@ -8,7 +8,7 @@
 
 ## Quickstart 🚀
 
-1. Get yout api token [here](https://dash.cloudflare.com/profile/api-tokens) (Top right -> My Profile -> API Tokens)
+1. Get your api token [here](https://dash.cloudflare.com/profile/api-tokens) (Top right -> My Profile -> API Tokens)
 
 Click create token. You can then use the Edit DNS Zone template. Give it a name.
 
