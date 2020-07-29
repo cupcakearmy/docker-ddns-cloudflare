@@ -42,7 +42,7 @@ async function update(newIP) {
   if (!zones.length) throw new Error(`No ZONE "${ZONE}" found`)
 
   const zoneId = zones[0].id
-  const { result: records } = await cf.dnsRecords.browse(zoneId, { name: DNS_RECORD })
+  const { result: records } = await cf.dnsRecords.browse(zoneId, { name: DNS_RECORD, type: 'A' })
 
   const recordAlreadyExists = records.length
   if (recordAlreadyExists) {
