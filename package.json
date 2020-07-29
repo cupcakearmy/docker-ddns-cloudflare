@@ -1,5 +1,10 @@
 {
   "license": "MIT",
+  "scripts": {
+    "docker:build": "docker build -t cupcakearmy/ddns-cloudflare:lastest .",
+    "docker:push": "docker push cupcakearmy/ddns-cloudflare:lastest",
+    "docker:publish": "yarn run docker:build && yarn run docker:push"
+  },
   "dependencies": {
     "axios": "^0.19.2",
     "cloudflare": "^2.7.0",

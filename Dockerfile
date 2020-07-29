@@ -2,7 +2,8 @@ FROM node:14-alpine
 
 WORKDIR /app
 
-ADD ./package.json script.js yarn.lock ./
+ADD ./package.json yarn.lock ./
 RUN yarn
+ADD ./script.js ./
 
 CMD ["node", "script.js"]
