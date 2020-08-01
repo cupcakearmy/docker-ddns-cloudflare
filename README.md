@@ -1,5 +1,8 @@
 # Docker DDNS Cloudflare
 
+![Docker Size](https://img.shields.io/docker/image-size/cupcakearmy/ddns-cloudflare)
+![Docker Downloads](https://img.shields.io/docker/pulls/cupcakearmy/ddns-cloudflare)
+
 ## Features 🌈
 
 - Simple container for setting setting and updating cloudflare records to your local ip address.
