@@ -6,7 +6,7 @@
     "docker:publish": "yarn run docker:build && yarn run docker:push"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "cloudflare": "^2.7.0",
     "cron": "^1.8.2",
     "dotenv": "^8.2.0"
