@@ -1,9 +1,7 @@
-version: '3'
+version: '3.7'
 
 services:
   ddns:
-    # build: .
-    image: cupcakearmy/ddns-cloudflare
-    restart: always
+    image: cupcakearmy/ddns-cloudflare:1
+    restart: unless-stopped
     env_file: .env
-    container_name: ddns
