@@ -11,17 +11,18 @@
 
 ## Quickstart 🚀
 
-1. Get your api token [here](https://dash.cloudflare.com/profile/api-tokens) (Top right -> My Profile -> API Tokens)
+1. Get your API Token [here](https://dash.cloudflare.com/profile/api-tokens) (Top right -> My Profile -> API Tokens)
 
 Click create token. You can then use the Edit DNS Zone template. Give it a name.
-
-![Settings](https://i.imgur.com/dLs8PHs.png)
 
 2. Create an `.env` file:
 
 ```bash
+TOKEN=mytoken
+# Or (Legacy mode)
 EMAIL=my@mail.com
-KEY=my_api_key
+KEY=Global_API_Key
+
 ZONE=example.org
 DNS_RECORD=some.example.org
 ```
@@ -30,12 +31,6 @@ DNS_RECORD=some.example.org
 
 ```bash
 docker run -d --name ddns --restart always --env-file .env cupcakearmy/ddns-cloudflare
-```
-
-To check logs:
-
-```bash
-docker logs ddns
 ```
 
 ### Docker-Copmose
@@ -48,6 +43,18 @@ cp .sample.env .env
 # Edit the .env file with your data
 docker-compose up -d
 ```
+
+## ENV Reference
+
+| Env          | Description                                            | Default                |
+| ------------ | ------------------------------------------------------ | ---------------------- |
+| `EMAIL`      | [Legacy] E-Mail of the Cloudflare account.             |                        |
+| `KEY`        | [Legacy] Key for authentication.                       |                        |
+| `TOKEN`      | API Token that can be used instead of `EMAIL` & `KEY`. |                        |
+| `ZONE`       | Cloudflare zone where your domain is.                  |                        |
+| `DNS_RECORD` | The actual DNS record that should be updated.          |                        |
+| `CRON`       | Frequency of updates.                                  | \*/5 \* \* \* \*       |
+| `RESOLVER`   | The endpoint used to determine your public ip.         | https://api.ipify.org/ |
 
 ## Customize
 

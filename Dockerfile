@@ -1,9 +1,10 @@
-FROM node:14-alpine
+FROM node:16-alpine
 
 WORKDIR /app
 
-ADD ./package.json yarn.lock ./
-RUN yarn
-ADD ./script.js ./
+ADD . .
+RUN npm install -g pnpm
+RUN pnpm install --frozen-lockfile
+RUN pnpm run build
 
-CMD ["node", "script.js"]
+CMD ["node", "."]

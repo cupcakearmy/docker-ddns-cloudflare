@@ -1,14 +1,21 @@
 {
   "license": "MIT",
+  "main": "dist",
   "scripts": {
-    "docker:build": "docker build -t cupcakearmy/ddns-cloudflare:lastest .",
-    "docker:push": "docker push cupcakearmy/ddns-cloudflare:lastest",
-    "docker:publish": "yarn run docker:build && yarn run docker:push"
+    "dev": "tsnd src/index.ts",
+    "build": "tsc"
   },
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^0.23.0",
     "cloudflare": "^2.7.0",
     "cron": "^1.8.2",
-    "dotenv": "^8.2.0"
+    "dotenv": "^10.0.0",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "@types/cloudflare": "^2.7.6",
+    "@types/cron": "^1.7.3",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.4.4"
   }
 }
