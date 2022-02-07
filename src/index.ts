@@ -3,6 +3,7 @@ import Axios from 'axios'
 import { CronJob } from 'cron'
 import { config } from 'dotenv'
 import winston from 'winston'
+import process from 'process'
 
 const logger = winston.createLogger({
   level: 'info',
@@ -107,8 +108,16 @@ async function main() {
     if (changed) await update(cf, { ip, record: DNS_RECORD!, zone: ZONE! }).catch((e) => logger.error(e.message))
   }
 
-  new CronJob(CRON || '*/5 * * * *', fn, null, true, undefined, null, true)
+  const cron = new CronJob(CRON || '*/5 * * * *', fn, null, true, undefined, null, true)
   logger.info('Started service.')
+
+  function terminate() {
+    logger.info('Stopping service.')
+    cron.stop()
+    process.exit(0)
+  }
+  process.on('SIGINT', terminate)
+  process.on('SIGTERM', terminate)
 }
 
 main()
