@@ -1,7 +1,8 @@
 # Docker DDNS Cloudflare
 
-![Docker Size](https://img.shields.io/docker/image-size/cupcakearmy/ddns-cloudflare)
-![Docker Downloads](https://img.shields.io/docker/pulls/cupcakearmy/ddns-cloudflare)
+![Docker Pulls](https://img.shields.io/docker/pulls/cupcakearmy/ddns-cloudflare?style=flat-square)
+![Docker Image Size (tag)](https://img.shields.io/docker/image-size/cupcakearmy/ddns-cloudflare/latest?style=flat-square)
+![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/cupcakearmy/ddns-cloudflare/latest?style=flat-square)
 
 ## Features 🌈
 
