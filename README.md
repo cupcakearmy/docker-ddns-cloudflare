@@ -26,6 +26,7 @@ KEY=Global_API_Key
 
 ZONE=example.org
 DNS_RECORD=some.example.org
+PROXIED=false
 ```
 
 3. Run the container
@@ -54,6 +55,7 @@ docker-compose up -d
 | `TOKEN`      | API Token that can be used instead of `EMAIL` & `KEY`. |                        |
 | `ZONE`       | Cloudflare zone where your domain is.                  |                        |
 | `DNS_RECORD` | The actual DNS record that should be updated.          |                        |
+| `PROXIED`    | Whether the record is proxied by CloudFlare or not.    |                        |
 | `CRON`       | Frequency of updates.                                  | \*/5 \* \* \* \*       |
 | `RESOLVER`   | The endpoint used to determine your public ip.         | https://api.ipify.org/ |
 

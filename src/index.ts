@@ -38,6 +38,7 @@ type DNSRecord = {
   zone: string
   record: string
   ip: string
+  proxied: boolean
 }
 async function update(cf: Cloudflare, options: DNSRecord) {
   // Find zone
@@ -56,7 +57,7 @@ async function update(cf: Cloudflare, options: DNSRecord) {
   logger.debug(`Zone ID: ${zoneId}`)
 
   // Set record
-  const records: { result: { id: string; type: string; name: string; ttl: number }[] } = (await cf.dnsRecords.browse(
+  const records: { result: { id: string; type: string; name: string; proxied: boolean; ttl: number }[] } = (await cf.dnsRecords.browse(
     zoneId
   )) as any
   const relevant = records.result.filter((r) => r.name === options.record && r.type === 'A')
@@ -67,6 +68,7 @@ async function update(cf: Cloudflare, options: DNSRecord) {
       type: 'A',
       name: options.record,
       content: options.ip,
+      proxied: options.proxied,
       ttl: 1,
     })
   } else {
@@ -84,6 +86,7 @@ async function update(cf: Cloudflare, options: DNSRecord) {
       type: 'A',
       name: options.record,
       content: options.ip,
+      proxied: options.proxied,
       ttl: record.ttl,
     })
     logger.info(`Updated DNS record ${record.name}`)
@@ -92,11 +95,12 @@ async function update(cf: Cloudflare, options: DNSRecord) {
 
 async function main() {
   config()
-  const { EMAIL, KEY, TOKEN, ZONE, DNS_RECORD, CRON, RESOLVER } = process.env
+  const { EMAIL, KEY, TOKEN, ZONE, DNS_RECORD, PROXIED, CRON, RESOLVER } = process.env
   if (!ZONE || !DNS_RECORD) {
     logger.error('Missing environment variables')
     process.exit(1)
   }
+  const PROXIED_B = (PROXIED === 'true');
 
   // Initialize Cloudflare
   const cf = new Cloudflare(TOKEN ? { token: TOKEN } : { email: EMAIL, key: KEY })
@@ -105,7 +109,7 @@ async function main() {
     const ip = await getCurrentIp(RESOLVER)
     const changed = checkIfUpdateIsRequired(ip)
     logger.info(`Running. Update required: ${!!changed}`)
-    if (changed) await update(cf, { ip, record: DNS_RECORD!, zone: ZONE! }).catch((e) => logger.error(e.message))
+    if (changed) await update(cf, { ip, record: DNS_RECORD!, zone: ZONE!, proxied: PROXIED_B! }).catch((e) => logger.error(e.message))
   }
 
   const cron = new CronJob(CRON || '*/5 * * * *', fn, null, true, undefined, null, true)
