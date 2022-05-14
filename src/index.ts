@@ -40,6 +40,8 @@ type DNSRecord = {
   ip: string
   proxied: boolean
 }
+
+type DNSBrowseResult = { result: { id: string; type: string; name: string; proxied: boolean; ttl: number }[] }
 async function update(cf: Cloudflare, options: DNSRecord) {
   // Find zone
   if (!Cache.has('zone')) {
@@ -57,9 +59,8 @@ async function update(cf: Cloudflare, options: DNSRecord) {
   logger.debug(`Zone ID: ${zoneId}`)
 
   // Set record
-  const records: { result: { id: string; type: string; name: string; proxied: boolean; ttl: number }[] } = (await cf.dnsRecords.browse(
-    zoneId
-  )) as any
+
+  const records: DNSBrowseResult = (await cf.dnsRecords.browse(zoneId)) as any
   const relevant = records.result.filter((r) => r.name === options.record && r.type === 'A')
   if (relevant.length === 0) {
     // Create DNS Record
@@ -100,7 +101,6 @@ async function main() {
     logger.error('Missing environment variables')
     process.exit(1)
   }
-  const PROXIED_B = (PROXIED === 'true');
 
   // Initialize Cloudflare
   const cf = new Cloudflare(TOKEN ? { token: TOKEN } : { email: EMAIL, key: KEY })
@@ -109,7 +109,10 @@ async function main() {
     const ip = await getCurrentIp(RESOLVER)
     const changed = checkIfUpdateIsRequired(ip)
     logger.info(`Running. Update required: ${!!changed}`)
-    if (changed) await update(cf, { ip, record: DNS_RECORD!, zone: ZONE!, proxied: PROXIED_B! }).catch((e) => logger.error(e.message))
+    if (changed)
+      await update(cf, { ip, record: DNS_RECORD!, zone: ZONE!, proxied: Boolean(PROXIED) }).catch((e) =>
+        logger.error(e.message)
+      )
   }
 
   const cron = new CronJob(CRON || '*/5 * * * *', fn, null, true, undefined, null, true)

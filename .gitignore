@@ -2,3 +2,4 @@
 ip.log
 dist
 node_modules
+.vscode
