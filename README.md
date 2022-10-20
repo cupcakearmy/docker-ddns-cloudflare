@@ -20,9 +20,6 @@ Click create token. You can then use the Edit DNS Zone template. Give it a name.
 
 ```bash
 TOKEN=mytoken
-# Or (Legacy mode)
-EMAIL=my@mail.com
-KEY=Global_API_Key
 
 ZONE=example.org
 DNS_RECORD=some.example.org
@@ -48,16 +45,15 @@ docker-compose up -d
 
 ## ENV Reference
 
-| Env          | Description                                            | Default                |
-| ------------ | ------------------------------------------------------ | ---------------------- |
-| `EMAIL`      | [Legacy] E-Mail of the Cloudflare account.             |                        |
-| `KEY`        | [Legacy] Key for authentication.                       |                        |
-| `TOKEN`      | API Token that can be used instead of `EMAIL` & `KEY`. |                        |
-| `ZONE`       | Cloudflare zone where your domain is.                  |                        |
-| `DNS_RECORD` | The actual DNS record that should be updated.          |                        |
-| `PROXIED`    | Whether the record is proxied by CloudFlare or not.    |                        |
-| `CRON`       | Frequency of updates.                                  | \*/5 \* \* \* \*       |
-| `RESOLVER`   | The endpoint used to determine your public ip.         | https://api.ipify.org/ |
+| Env          | Default                  | Description                                                                                                 |
+| ------------ | ------------------------ | ----------------------------------------------------------------------------------------------------------- |
+| `TOKEN`      |                          | API Token.                                                                                                  |
+| `ZONE`       |                          | Cloudflare zone where your domain is.                                                                       |
+| `DNS_RECORD` |                          | The actual DNS record that should be updated.                                                               |
+| `PROXIED`    | `true`                   | Whether the record is proxied by CloudFlare or not.                                                         |
+| `CRON`       | `*/5 * * * *`            | Frequency of updates.                                                                                       |
+| `RESOLVER`   | `https://api.ipify.org/` | The endpoint used to determine your public ip.                                                              |
+| `LOG_LEVEL`  | `info`                   | Log level to run at. See [winston](https://github.com/winstonjs/winston#logging-levels) for possible values |
 
 ## Customize
 
