@@ -1,21 +1,19 @@
-FROM node:16-alpine as builder
-
+FROM node:18-alpine as base
 WORKDIR /app
+RUN npm -g i pnpm
 
+
+FROM base as builder
 ADD ./package.json ./pnpm-lock.yaml ./
-RUN npm exec pnpm install --frozen-lockfile
-
+RUN pnpm install --frozen-lockfile
 ADD . .
-RUN npm exec pnpm run build
+RUN pnpm run build
 
-FROM node:16-alpine
-
-WORKDIR /app
-
+FROM base
 ADD ./package.json ./pnpm-lock.yaml ./
-RUN npm exec pnpm install --frozen-lockfile --prod
+RUN pnpm install --frozen-lockfile --prod
 COPY --from=builder /app/dist/ /app/dist/
 
 STOPSIGNAL SIGTERM
 
-CMD ["node", "."]
+CMD ["pnpm", "start"]
