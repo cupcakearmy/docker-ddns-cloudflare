@@ -22,7 +22,7 @@ function getEnv<T>(
 
 function parseBoolean(value: string): boolean {
   value = value.toLowerCase()
-  const truthy = ['true', 'yes', '1']
+  const truthy = ['true', 'yes', '1', 'y']
   return truthy.includes(value)
 }
 
