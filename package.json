@@ -1,23 +1,23 @@
 {
-  "packageManager": "pnpm@8.6.3",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "license": "MIT",
   "type": "module",
   "main": "dist",
   "scripts": {
-    "dev": "tsc -w",
     "build": "tsc",
+    "dev": "tsc -w",
     "start": "node ."
   },
   "dependencies": {
     "axios": "^1.4.0",
     "dotenv": "^16.3.1",
     "node-cron": "^3.0.2",
-    "winston": "^3.9.0"
+    "winston": "^3.10.0"
   },
   "devDependencies": {
-    "@types/node": "^20.3.1",
-    "@types/node-cron": "^3.0.7",
-    "typescript": "^5.1.3"
-  }
+    "@types/node": "^20.5.1",
+    "@types/node-cron": "^3.0.8",
+    "typescript": "^5.1.6"
+  },
+  "packageManager": "pnpm@8.6.12"
 }
