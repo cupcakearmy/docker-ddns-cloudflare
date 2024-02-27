@@ -2,17 +2,19 @@ import { update } from './cloudflare.js'
 import { checkIfUpdateIsRequired, getCurrentIp } from './ip.js'
 import { logger } from './logger.js'
 
+const l = logger.child({ context: 'runner' })
+
 export async function loop() {
   const ip = await getCurrentIp()
   const changed = checkIfUpdateIsRequired(ip)
-  logger.info(`Running. Update required: ${!!changed}`)
+  l.info(`Running. Update required: ${!!changed}`)
   if (changed) {
     try {
       await update(ip)
-      logger.info('Successfully updated DNS record')
+      l.info('Successfully updated DNS record')
     } catch (e) {
-      logger.error(e)
-      logger.error('Failed to update DNS record')
+      l.error(e)
+      l.error('Failed to update DNS record')
     }
   }
 }

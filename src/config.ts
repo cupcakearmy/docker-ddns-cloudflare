@@ -1,7 +1,5 @@
-import { config } from 'dotenv'
-import { validate } from 'node-cron'
-
-config()
+import { Cron } from 'croner'
+import pkg from '../package.json'
 
 function getEnv(key: string, fallback: string, parse?: undefined, validator?: (s: string) => boolean): string
 function getEnv<T>(key: string, fallback: T, parse: (value: string) => T, validator?: (T: string) => boolean): T
@@ -31,7 +29,7 @@ function isPresent(s: string): boolean {
 }
 
 export const Config = {
-  version: getEnv('npm_package_version', 'unknown'),
+  version: pkg.version,
   logging: {
     level: getEnv('LOG_LEVEL', 'info'),
   },
@@ -44,7 +42,14 @@ export const Config = {
     proxied: getEnv('PROXIED', false, parseBoolean),
   },
   runner: {
-    cron: getEnv('CRON', '*/5 * * * *', undefined, (s) => validate(s)),
+    cron: getEnv('CRON', '*/5 * * * *', undefined, (s) => {
+      try {
+        new Cron(s)
+        return true
+      } catch {
+        return false
+      }
+    }),
     resolver: getEnv('RESOLVER', 'https://api.ipify.org'),
   },
 }

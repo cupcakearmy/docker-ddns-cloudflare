@@ -1,5 +1,4 @@
 *
 !src
-!tsconfig.json
 !package.json
-!pnpm-lock.yaml
+!bun.lockb

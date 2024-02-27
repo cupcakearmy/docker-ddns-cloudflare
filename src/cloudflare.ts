@@ -20,6 +20,8 @@ type DNSRecord = {
 type DNSRecordCreate = Pick<DNSRecord, 'name' | 'type' | 'ttl' | 'proxied' | 'content'>
 type DNSRecordPatch = Partial<DNSRecordCreate>
 
+const l = logger.child({ context: 'cloudflare' })
+
 const Base = axios.create({
   baseURL: 'https://api.cloudflare.com/client/v4',
   headers: {
@@ -80,27 +82,27 @@ export const API = {
 export async function update(ip: string) {
   // Find zone
   if (!Cache.has('zone')) {
-    logger.debug('Fetching zone')
+    l.debug('Fetching zone')
     const zone = await API.zones.findByName(Config.dns.zone)
     if (!zone) {
-      logger.error(`Zone "${Config.dns.zone}"" not found`)
+      l.error(`Zone "${Config.dns.zone}" not found`)
       process.exit(1)
     }
     Cache.set('zone', zone)
   }
 
   const zoneId = Cache.get('zone')!
-  logger.debug(`Zone ID: ${zoneId}`)
+  l.debug(`Zone ID: ${zoneId}`)
 
   // Set record
   const records = await API.records.find(zoneId)
 
-  logger.debug('Updating record', ip)
+  l.debug('Updating record', ip)
 
   switch (records.length) {
     case 0:
       // Create DNS Record
-      logger.debug('Creating DNS record')
+      l.debug('Creating DNS record')
       await API.records.create(zoneId, {
         content: ip,
         name: Config.dns.record,
@@ -114,7 +116,7 @@ export async function update(ip: string) {
       break
     default:
       // More than one record, delete all but the first
-      logger.debug('Deleting other DNS records')
+      l.debug('Deleting other DNS records')
       for (const record of records.slice(1)) {
         await API.records.remove(zoneId, record.id)
       }

@@ -51,7 +51,7 @@ docker-compose up -d
 | `ZONE`       |                          | Cloudflare zone where your domain is.                                                                       |
 | `DNS_RECORD` |                          | The actual DNS record that should be updated.                                                               |
 | `PROXIED`    | `true`                   | Whether the record is proxied by CloudFlare or not.                                                         |
-| `CRON`       | `*/5 * * * *`            | Frequency of updates.                                                                                       |
+| `CRON`       | `*/5 * * * *`            | Frequency of updates. The [following syntax](https://croner.56k.guru/usage/pattern/) is supported           |
 | `RESOLVER`   | `https://api.ipify.org/` | The endpoint used to determine your public ip.                                                              |
 | `LOG_LEVEL`  | `info`                   | Log level to run at. See [winston](https://github.com/winstonjs/winston#logging-levels) for possible values |
 

@@ -1,23 +1,10 @@
-FROM node:20-alpine as base
-# PNPM
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
-# Setup
-ENV CI=true
+FROM oven/bun:1 as base
+
 WORKDIR /app
-ADD ./package.json ./pnpm-lock.yaml ./
+COPY package.json bun.lockb /app/
+RUN bun install --production --frozen-lockfile
 
-
-FROM base as builder
-RUN pnpm install
-ADD . .
-RUN pnpm run build
-
-FROM base
-RUN pnpm install --prod
-COPY --from=builder /app/dist/ /app/dist/
+COPY . .
 
 STOPSIGNAL SIGTERM
-
-CMD ["pnpm", "start"]
+CMD ["bun", "."]

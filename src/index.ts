@@ -1,14 +1,20 @@
-import { schedule } from 'node-cron'
-import process from 'process'
+import { Cron } from 'croner'
+import process from 'node:process'
 
 import { Config } from './config.js'
 import { logger } from './logger.js'
 import { loop } from './runner.js'
 
 async function main() {
-  const cron = schedule(Config.runner.cron, loop)
-  logger.info('Started service.', { version: Config.version })
-  logger.debug('Config', Config)
+  const cron = new Cron(Config.runner.cron, { protect: true }, loop)
+  logger.info('started service', { version: Config.version })
+  logger.debug('config', Config)
+
+  const nextRun = cron.nextRun()
+  if (nextRun) {
+    const pretty = new Intl.DateTimeFormat(undefined, { dateStyle: 'long', timeStyle: 'long' }).format(nextRun)
+    logger.info(`next run scheduled for ${pretty}`, { nextRunAt: nextRun })
+  }
 
   function terminate() {
     logger.info('Stopping service.')
